@@ -2,6 +2,8 @@
   <img src="https://www.github.com/mutualmobile/MMRecord/raw/gh-pages/Images/MMRecord-blog_banner.png") alt="MMRecord Blog Banner"/>
 </p>
 
+<p><b>Note: This library was originally forked to add support for responses with status codes in the 4xx range.<b></p>
+
 MMRecord is a block-based seamless web service integration library for iOS and Mac OS X. It leverages the [Core Data](https://developer.apple.com/library/mac/#documentation/Cocoa/Reference/CoreData_ObjC/_index.html) model configuration to automatically create and populate a complete object graph from an API response. It works with any networking library, is simple to setup, and includes many popular features that make working with web services even easier. Here's how to make a request for App.net Post records:
 
 
