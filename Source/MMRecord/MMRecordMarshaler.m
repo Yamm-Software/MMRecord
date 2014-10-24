@@ -1,3 +1,4 @@
+
 // MMRecordMarshaler.m
 //
 // Copyright (c) 2013 Mutual Mobile (http://www.mutualmobile.com/)
@@ -49,16 +50,43 @@
              fromDictionary:(NSDictionary *)dictionary {
     NSArray *possibleKeyPaths = [protoRecord.representation keyPathsForMappingAttributeDescription:attributeDescription];
     
+    if (possibleKeyPaths.count > 1) {
+        NSMutableArray *keyPaths = [NSMutableArray array];
+        NSInteger i = 0;
+        NSInteger len = 0;
+        NSInteger indexOfLongest = -1;
+        for (NSString * kp in possibleKeyPaths) {
+            NSArray *comp = [kp componentsSeparatedByString:@"."];
+            
+            if (indexOfLongest < 0 || comp.count > len) {
+                len = comp.count;
+                indexOfLongest = i;
+            }
+            i++;
+        }
+        
+        if (indexOfLongest < 0) {
+            indexOfLongest = 0;
+        }
+        possibleKeyPaths = @[possibleKeyPaths[indexOfLongest]];
+        
+        
+        
+        
+    }
     for (NSString *possibleKeyPath in possibleKeyPaths) {
+        
         id value = [protoRecord.dictionary valueForKeyPath:possibleKeyPath];
         
         if (value == [NSNull null]) {
-            break;
+            value = nil; //mod by elliot
         }
         
-        if (value == nil) {
-            continue;
-        }
+        /* mod by elliot
+         if (value == nil) {
+         continue;
+         }
+         */
         
         [self setValue:value
               onRecord:protoRecord.record
@@ -71,13 +99,23 @@
         onRecord:(MMRecord *)record
        attribute:(NSAttributeDescription *)attribute
    dateFormatter:(NSDateFormatter *)dateFormatter {
-    if (value == nil) {
-        return;
-    }
+    
+    /* modified by Elliot
+     if (value == nil) {
+     return;
+     }
+     */
     
     id newValue = [self valueForAttribute:attribute rawValue:value dateFormatter:dateFormatter];
     
-    if (newValue != nil) {
+    //if (newValue != nil) {
+    
+    if ([attribute.name isEqualToString:@"id"]) {
+        NSLog(@"ID!");
+    }
+    
+    if ( newValue || (newValue == nil && [record valueForKey:attribute.name] != nil) ) {
+        NSLog(@"value %@ for attribute: %@", newValue, attribute.name);
         [record setValue:newValue forKey:attribute.name];
     }
 }
