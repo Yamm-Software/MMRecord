@@ -115,7 +115,6 @@
     }
     
     if ( newValue || (newValue == nil && [record valueForKey:attribute.name] != nil) ) {
-        NSLog(@"value %@ for attribute: %@", newValue, attribute.name);
         [record setValue:newValue forKey:attribute.name];
     }
 }
