@@ -83,7 +83,13 @@ NSString * const AFMMRecordResponseSerializerWithDataKey = @"AFMMRecordResponseS
     id recordResponseObject = responseObject;
     
     if (keyPathForResponseObject != nil) {
-        recordResponseObject = [responseObject valueForKeyPath:keyPathForResponseObject];
+        @try {
+            recordResponseObject = [responseObject valueForKeyPath:keyPathForResponseObject];
+        }
+        @catch (NSException *exception) {
+            recordResponseObject = nil;
+        }
+        
     } else {
         recordResponseObject = responseObject;
     }
