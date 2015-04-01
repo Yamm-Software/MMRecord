@@ -185,7 +185,7 @@ NSString * const AFMMRecordResponseSerializerWithDataKey = @"AFMMRecordResponseS
     
     // Anything within the 400 to 499 range should not be serialized
     NSRange range = NSMakeRange(400, 100);
-    int statusCode = ((NSHTTPURLResponse *)response).statusCode;
+    NSInteger statusCode = ((NSHTTPURLResponse *)response).statusCode;
     NSIndexSet *unacceptableStatusCode = [NSIndexSet indexSetWithIndexesInRange:range];
     if ([unacceptableStatusCode containsIndex:statusCode]) {
         return nil;
