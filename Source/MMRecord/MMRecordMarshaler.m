@@ -100,20 +100,14 @@
        attribute:(NSAttributeDescription *)attribute
    dateFormatter:(NSDateFormatter *)dateFormatter {
     
-    /* modified by Elliot
-     if (value == nil) {
-     return;
-     }
-     */
-    
     id newValue = [self valueForAttribute:attribute rawValue:value dateFormatter:dateFormatter];
     
-    //if (newValue != nil) {
-    
-    if ([attribute.name isEqualToString:@"id"]) {
-        NSLog(@"ID!");
+#ifdef DEBUG
+    if ([attribute.name isEqualToString:@"stay_id"]) {
+        NSLog(@"setting ID %@ for stay: %@", newValue, record);
     }
-    
+#endif
+        
     if ( newValue || (newValue == nil && [record valueForKey:attribute.name] != nil) ) {
         [record setValue:newValue forKey:attribute.name];
     }
